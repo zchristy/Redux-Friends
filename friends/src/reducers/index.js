@@ -11,11 +11,12 @@ import {
   ADD_FRIEND_START,
   ADD_FRIEND_SUCCESS,
   ADD_FRIEND_FAILURE,
-  ADD_FRIEND_END,
   UPDATE_FRIEND_START,
   UPDATE_FRIEND_SUCCESS,
   UPDATE_FRIEND_FAILURE,
-  UPDATE_FRIEND_END
+  DELETE_FRIEND_START,
+  DELETE_FRIEND_SUCCESS,
+  DELETE_FRIEND_FAILURE
 } from '../actions';
 
 const initialState = {
@@ -24,9 +25,7 @@ const initialState = {
   clickedFriend: null,
   fetchingClickedFriend: false,
   savingFriend: false,
-  savedFriend: false,
   updatingFriend: false,
-  updatedFriend: false,
   deletingFriend:false,
   loggingIn: false,
   isLoggedIn: false,
@@ -64,7 +63,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         friendsList: action.payload,
-        savedFriend: true,
         savingFriend: false,
         error: ''
         }
@@ -73,12 +71,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         savingFriend: false,
         error: action.payload
-        }
-    case ADD_FRIEND_END:
-      return {
-        ...state,
-        savedFriend: false,
-        error: ''
         }
     case FETCH_FRIENDS_START:
       return {
@@ -128,7 +120,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         updatingFriend: false,
-        updatedFriend: true,
         error: ''
         }
     case UPDATE_FRIEND_FAILURE:
@@ -137,11 +128,23 @@ const reducer = (state = initialState, action) => {
         updatingFriend: false,
         error: action.payload
         }
-    case UPDATE_FRIEND_END:
+    case DELETE_FRIEND_START:
       return {
         ...state,
-        updatedFriend: false,
+        deletingFriend: true,
         error: ''
+      }
+    case DELETE_FRIEND_SUCCESS:
+      return {
+        ...state,
+        deletingFriend: false,
+        error: ''
+        }
+    case DELETE_FRIEND_FAILURE:
+      return {
+        ...state,
+        deletingFriend: false,
+        error: action.payload
         }
     default:
       return state

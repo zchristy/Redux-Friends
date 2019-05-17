@@ -21,11 +21,11 @@ class FriendsList extends Component {
           <div>
             {this.props.friendsList.map(friend => {
               return (
-                <ul key={friend.id}>
-                  <Link to={`/friend/${friend.id}`} ><li>{friend.name}</li></Link>
-                  <li>Age: {friend.age}</li>
-                  <li>{friend.email}</li>
-                </ul>
+                <div key={friend.id}>
+                  <Link to={`/friend/${friend.id}`} ><h1>{friend.name}</h1></Link>
+                  <h4>Age: {friend.age}</h4>
+                  <h4>{friend.email}</h4>
+                </div>
               )
               })}
           </div>

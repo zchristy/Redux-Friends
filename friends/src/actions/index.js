@@ -64,7 +64,6 @@ export const getClickedFriend = id => dispatch => {
 export const ADD_FRIEND_START = 'ADD_FRIEND_START';
 export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS';
 export const ADD_FRIEND_FAILURE = 'ADD_FRIEND_FAILURE';
-export const ADD_FRIEND_END = 'ADD_FRIEND_END';
 
 export const addFriend = friend => dispatch => {
   dispatch({ type: ADD_FRIEND_START });
@@ -84,7 +83,6 @@ export const addFriend = friend => dispatch => {
 export const UPDATE_FRIEND_START = 'UPDATE_FRIEND_START';
 export const UPDATE_FRIEND_SUCCESS = 'UPDATE_FRIEND_SUCCESS';
 export const UPDATE_FRIEND_FAILURE = 'UPDATE_FRIEND_FAILURE';
-export const UPDATE_FRIEND_END = 'UPDATE_FRIEND_END';
 
 export const updateFriend = friend => dispatch => {
   dispatch({ type: UPDATE_FRIEND_START });
@@ -96,6 +94,25 @@ export const updateFriend = friend => dispatch => {
     .catch(err => {
       dispatch({
         type: UPDATE_FRIEND_FAILURE,
+        payload: `${err}`
+      });
+    });
+};
+
+export const DELETE_FRIEND_START = 'DELETE_FRIEND_START';
+export const DELETE_FRIEND_SUCCESS = 'DELETE_FRIEND_SUCCESS';
+export const DELETE_FRIEND_FAILURE = 'DELETE_FRIEND_FAILURE';
+
+export const deleteFriend = id => dispatch => {
+  dispatch({ type: DELETE_FRIEND_START });
+  return axiosWithAuth()
+    .delete(`/api/friends/${id}`)
+    .then(res => {
+      dispatch({ type: DELETE_FRIEND_SUCCESS, payload: [...res.data] });
+    })
+    .catch(err => {
+      dispatch({
+        type: DELETE_FRIEND_FAILURE,
         payload: `${err}`
       });
     });
