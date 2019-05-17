@@ -50,8 +50,8 @@ class UpdateForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  clickedFriend: { ...state.clickedFriend },
-  updatingFriend: state.updatingFriend
+  clickedFriend: { ...state.fetchClickedFriendReducer.clickedFriend },
+  updatingFriend: state.updateFriendReducer.updatingFriend
 });
 
 export default connect( mapStateToProps , { updateFriend } )(UpdateForm);

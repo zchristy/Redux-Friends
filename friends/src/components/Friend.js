@@ -38,7 +38,7 @@ class Friend extends Component {
 }
 
 const mapStateToProps = state => ({
-  clickedFriend: { ...state.clickedFriend }
+  clickedFriend: { ...state.fetchClickedFriendReducer.clickedFriend }
 });
 
 export default connect( mapStateToProps, { getClickedFriend, deleteFriend } )(Friend);

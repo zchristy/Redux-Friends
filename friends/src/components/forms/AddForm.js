@@ -57,9 +57,9 @@ class AddForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  savingFriend: state.savingFriend,
-  savedFriend: state.savedFriend,
-  error: state.error
+  savingFriend: state.addFriendReducer.savingFriend,
+  savedFriend: state.addFriendReducer.savedFriend,
+  error: state.addFriendReducer.error
 });
 
 export default connect( null, { addFriend } )(AddForm);

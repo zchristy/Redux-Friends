@@ -13,6 +13,7 @@ class FriendsList extends Component {
   }
 
   render() {
+    console.log(this.props)
     if(this.props.fetchingFriends) {
       return <Loader type="Rings" color="#00BFFF" height="90" width="60" />
     } else {
@@ -36,9 +37,9 @@ class FriendsList extends Component {
 }
 
 const mapStateToProps = state => ({
-  friendsList: state.friendsList,
-  fetchingFriends: state.fetchingFriends,
-  error: state.error
+  friendsList: state.fetchFriendsReducer.friendsList,
+  fetchingFriends: state.fetchFriendsReducer.fetchingFriends,
+  error: state.fetchFriendsReducer.error
 });
 
 export default connect( mapStateToProps, { getFriends } )(FriendsList);
