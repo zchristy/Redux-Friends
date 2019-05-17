@@ -3,14 +3,10 @@ import { connect } from "react-redux";
 import Loader from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 
-import { getFriends, clickedFriend } from '../actions';
+import { getFriends } from '../actions';
 
 
 class FriendsList extends Component {
-
-  clickedHandler = friend => {
-    this.props.clickedFriend(friend);
-  }
 
   componentDidMount() {
     this.props.getFriends()
@@ -22,15 +18,17 @@ class FriendsList extends Component {
     } else {
       return (
         <div>
-          <div>{this.props.friendsList.map(friend => {
-            return (
-              <ul key={friend.id}>
-                <Link to={`/friend/${friend.id}`} ><li onClick={() => this.clickedHandler(friend)}>{friend.name}</li></Link>
-                <li>Age: {friend.age}</li>
-                <li>{friend.email}</li>
-              </ul>
-            )
-          }) }</div>
+          <div>
+            {this.props.friendsList.map(friend => {
+              return (
+                <ul key={friend.id}>
+                  <Link to={`/friend/${friend.id}`} ><li>{friend.name}</li></Link>
+                  <li>Age: {friend.age}</li>
+                  <li>{friend.email}</li>
+                </ul>
+              )
+              })}
+          </div>
         </div>
       );
     }
@@ -43,4 +41,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect( mapStateToProps, { getFriends, clickedFriend } )(FriendsList);
+export default connect( mapStateToProps, { getFriends } )(FriendsList);

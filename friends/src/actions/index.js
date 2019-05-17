@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 import { axiosWithAuth } from '../axiosWithAuth';
 
@@ -41,11 +40,63 @@ export const getFriends = () => dispatch => {
     });
 };
 
-export const CLICKED_FRIEND = 'CLICKED_FRIEND';
+export const FETCH_CLICKED_FRIEND_START = 'FETCH_CLICKED_FRIEND_START';
+export const FETCH_CLICKED_FRIEND_SUCCESS = 'FETCH_CLICKED_FRIEND_SUCCESS';
+export const FETCH_CLICKED_FRIEND_FAILURE = 'FETCH_CLICKED_FRIEND_FAILURE';
 
-export const clickedFriend = friend => {
-  return {
-    type: CLICKED_FRIEND,
-    payload: friend
-  }
+export const getClickedFriend = id => dispatch => {
+  console.log(id)
+  dispatch({ type: FETCH_CLICKED_FRIEND_START });
+  axiosWithAuth()
+    .get(`/api/friends/${id}`)
+    .then(res => {
+      console.log(res.data)
+      dispatch({ type: FETCH_CLICKED_FRIEND_SUCCESS, payload: {...res.data} });
+    })
+    .catch(err => {
+      dispatch({
+        type: FETCH_CLICKED_FRIEND_FAILURE,
+        payload: `${err}`
+      });
+    });
+};
+
+export const ADD_FRIEND_START = 'ADD_FRIEND_START';
+export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS';
+export const ADD_FRIEND_FAILURE = 'ADD_FRIEND_FAILURE';
+export const ADD_FRIEND_END = 'ADD_FRIEND_END';
+
+export const addFriend = friend => dispatch => {
+  dispatch({ type: ADD_FRIEND_START });
+  return axiosWithAuth()
+    .post('/api/friends', friend)
+    .then(res => {
+      dispatch({ type: ADD_FRIEND_SUCCESS, payload: [...res.data] });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_FRIEND_FAILURE,
+        payload: `${err}`
+      });
+    });
+};
+
+export const UPDATE_FRIEND_START = 'UPDATE_FRIEND_START';
+export const UPDATE_FRIEND_SUCCESS = 'UPDATE_FRIEND_SUCCESS';
+export const UPDATE_FRIEND_FAILURE = 'UPDATE_FRIEND_FAILURE';
+export const UPDATE_FRIEND_END = 'UPDATE_FRIEND_END';
+
+export const updateFriend = friend => dispatch => {
+  dispatch({ type: UPDATE_FRIEND_START });
+  return axiosWithAuth()
+    .put(`/api/friends/${friend.id}`, friend)
+    .then(res => {
+      dispatch({ type: UPDATE_FRIEND_SUCCESS, payload: [...res.data] });
+    })
+    .catch(err => {
+      dispatch({
+        type: UPDATE_FRIEND_FAILURE,
+        payload: `${err}`
+      });
+    });
 };
