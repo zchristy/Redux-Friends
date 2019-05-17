@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 
 import FriendsList from './components/FriendsList';
 import Friend from './components/Friend';
@@ -15,7 +16,7 @@ function App() {
     <Router>
       <div className="App">
         <Nav />
-        <Route exact path='/' component={FriendsList} />
+        <PrivateRoute exact path="/" component={FriendsList} />
         <Route path='/friend/:id' component={Friend} />
         <Route path='/add-friend' component={AddForm} />
         <Route path='/login' component={Login} />

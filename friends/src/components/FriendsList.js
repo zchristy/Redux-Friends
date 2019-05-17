@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Loader from 'react-loader-spinner';
+import { Link } from 'react-router-dom';
 
-import { getFriends } from '../actions';
+import { getFriends, clickedFriend } from '../actions';
+
 
 class FriendsList extends Component {
+
+  clickedHandler = friend => {
+    this.props.clickedFriend(friend);
+  }
 
   componentDidMount() {
     this.props.getFriends()
@@ -13,13 +19,21 @@ class FriendsList extends Component {
   render() {
     if(this.props.fetchingFriends) {
       return <Loader type="Rings" color="#00BFFF" height="90" width="60" />
+    } else {
+      return (
+        <div>
+          <div>{this.props.friendsList.map(friend => {
+            return (
+              <ul key={friend.id}>
+                <Link to={`/friend/${friend.id}`} ><li onClick={() => this.clickedHandler(friend)}>{friend.name}</li></Link>
+                <li>Age: {friend.age}</li>
+                <li>{friend.email}</li>
+              </ul>
+            )
+          }) }</div>
+        </div>
+      );
     }
-
-    return (
-      <div>
-        <div>{this.props.friendsList }</div>
-      </div>
-    );
   }
 }
 
@@ -29,4 +43,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect( mapStateToProps, { getFriends } )(FriendsList);
+export default connect( mapStateToProps, { getFriends, clickedFriend } )(FriendsList);
